@@ -108,4 +108,15 @@ Class Session implements \Serializable
             $this->$key = $value;
         }
     }
+
+    // Implements __unserialize to avoid issues with PHP >= 8.1
+    public function __unserialize($data): void {
+        $this->unserialize($data);
+    }
+
+    // Implements __serialize to avoid issues with PHP >= 8.1
+    public function __serialize(): array {
+        return get_object_vars($this);
+    }
+
 }
